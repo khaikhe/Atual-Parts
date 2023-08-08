@@ -1,8 +1,10 @@
 package com.example.AtualParts;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -31,6 +33,9 @@ private ActivityMainBinding binding;
     private  RadioButton checkOutros;
     public RadioGroup radioGroup1;
     public RadioGroup radioGroup2;
+    public Button Button;
+
+    private static final String ARQUIVO_PREFERENCIAL = "Arquivo Preferencia";
 
     public MainActivity() {
     }
@@ -96,8 +101,6 @@ private ActivityMainBinding binding;
             textoResultado2.setText(" Categoria: " + texto);
         }
     }
-
-
     public void enviar(View view) {
          boolean campoemail1, camponome;
         campoemail1 = campoEmail.getText().toString().isEmpty();
@@ -108,6 +111,15 @@ private ActivityMainBinding binding;
                     Toast.makeText(getApplicationContext(), " Por Favor Preencha Todos Os Campos ", Toast.LENGTH_SHORT).show();
 
                 } else {
+                    SharedPreferences preferences = getSharedPreferences(ARQUIVO_PREFERENCIAL,0 );
+                    SharedPreferences.Editor editor = preferences.edit();
+                    // validar nome
+                    String mont = campoNome.getText().toString();
+                    editor.putString(" Montadora ", mont);
+                    editor.commit();
+                    String car = campoEmail.getText().toString();
+                    editor.putString(" Carro ", car);
+                    editor.commit();
                     campoNome.setText("");
                     campoEmail.setText("");
                     textoResultado.setText("");
@@ -140,6 +152,7 @@ private ActivityMainBinding binding;
         EsconderTeclado(view);
 
     }
+    
     public  void buttonPorta(View view) {
         radioGroup2.clearCheck();
 
